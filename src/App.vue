@@ -50,7 +50,7 @@ onMounted( () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-x-6 max-w-4xl items-start">
+  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border">
     <div>
       <h2 class="font-semibold">Users</h2>
       <p class="italic" v-if="state.loading">Loading users ...</p>
@@ -61,8 +61,8 @@ onMounted( () => {
       </ul>
     </div>
 
-    <form action="" @submit.prevent="onSubmit" class="grid gap-x-4 items-center grid-cols-[auto_1fr_auto]">
-      <label class="col-span-3">Add user:</label>
+    <form action="" @submit.prevent="onSubmit" class="grid gap-x-4 items-center grid-cols-[1fr_auto]">
+      <label class="col-span-2">Add user:</label>
       <input class="rounded-md p-2 focus:shadow focus:shadow-cyan-600 transition-all text-gray-700 focus:outline-none"
           type="text" placeholder="Name" v-model="state.name"/>
       <button class="bg-cyan-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md disabled:opacity-30"
