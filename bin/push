@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#make sure the current directory is one level above this file
+cd "$(dirname "$0")/.."
+
+# Trigger yarn build one level up and then upload the dist folder to s3
+
+yarn build
+aws s3 sync dist s3://aws-workshop-ui --delete
