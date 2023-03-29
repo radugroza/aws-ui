@@ -58,12 +58,12 @@ onMounted( () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border">
+  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border rounded-lg">
     <div>
       <h2 class="font-semibold">Users</h2>
       <p class="italic" v-if="state.loading">Loading users ...</p>
-      <ul v-if="!state.loading && state.users.length">
-        <li v-for="user in state.users" :key="user.id" class="flex items-center justify-between p-2">
+      <ul v-if="!state.loading && state.users.length" class="bg-gray-600 flex flex-col items-stretch gap-y-px">
+        <li v-for="user in state.users" :key="user.id" class="bg-gray-800 py-1">
           <span>{{ user.user_name }}</span>
         </li>
       </ul>
