@@ -58,7 +58,7 @@ onMounted( () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border rounded-lg">
+  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border rounded-xl">
     <div>
       <h2 class="font-semibold">Users</h2>
       <p class="italic" v-if="state.loading">Loading users ...</p>
