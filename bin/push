@@ -6,4 +6,4 @@ cd "$(dirname "$0")/.."
 # Trigger yarn build one level up and then upload the dist folder to s3
 
 yarn build
-aws s3 sync dist s3://aws-workshop-ui --delete
+aws s3 sync dist s3://aws-workshop-ui --delete && aws cloudfront create-invalidation --distribution-id EUICJI1F1QB1G --paths "/index.html" "/assets/*"

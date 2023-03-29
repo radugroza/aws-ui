@@ -11,11 +11,12 @@ axios.interceptors.response.use( ( response ) => {
   return response;
 }, function ( error ) {
   state.error = error.response?.data?.message || error.message;
-  return error;
+  return Promise.reject( error );
 } );
 
 const state = reactive( {
   name: '',
+  email: '',
   users: [
     {
       name: 'Radu'
@@ -30,11 +31,18 @@ const state = reactive( {
 
 async function onSubmit() {
   state.saving = true;
-  await axios.post( 'https://api.aws.groza.app/users', {
-    name: state.name
-  } );
+  try {
+    await axios.put( 'https://api.aws.groza.app/users', {
+      name: state.name,
+      email: state.email,
+    } );
+    loadUsers();
+    state.name = '';
+    state.email = '';
+  } catch ( e ) {
+    state.error = e.response?.data?.message || e.message
+  }
   state.saving = false;
-  loadUsers();
 }
 
 async function loadUsers() {
@@ -56,20 +64,26 @@ onMounted( () => {
       <p class="italic" v-if="state.loading">Loading users ...</p>
       <ul v-if="!state.loading && state.users.length">
         <li v-for="user in state.users" :key="user.id" class="flex items-center justify-between p-2">
-          <span>{{ user.name }}</span>
+          <span>{{ user.user_name }}</span>
         </li>
       </ul>
     </div>
 
-    <form action="" @submit.prevent="onSubmit" class="grid gap-x-4 items-center grid-cols-[1fr_auto]">
-      <label class="col-span-2">Add user:</label>
-      <input class="rounded-md p-2 focus:shadow focus:shadow-cyan-600 transition-all text-gray-700 focus:outline-none"
-          type="text" placeholder="Name" v-model="state.name"/>
-      <button class="bg-cyan-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md disabled:opacity-30"
-          type="submit" :disabled="state.saving">
-        Add
-      </button>
-    </form>
+    <section>
+      <h2 class="text-lg">Add user:</h2>
+      <form action="" @submit.prevent="onSubmit" class="flex flex-col gap-y-2 items-stretch">
+        <input
+            class="rounded-md p-2 border border-cyan-500 focus:shadow focus:shadow-cyan-600 transition-all text-gray-700 focus:outline-none"
+            type="text" placeholder="Name" v-model="state.name"/>
+        <input
+            class="rounded-md p-2 border border-cyan-500 focus:shadow focus:shadow-cyan-600 transition-all text-gray-700 focus:outline-none"
+            type="email" placeholder="Email" v-model="state.email"/>
+        <button class="bg-cyan-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md disabled:opacity-30"
+            type="submit" :disabled="state.saving">
+          Add
+        </button>
+      </form>
+    </section>
 
     <div v-if="state.error"
         class="bg-red-100 border border-red-400 text-red-700 p-4 mt-4 rounded relative"
