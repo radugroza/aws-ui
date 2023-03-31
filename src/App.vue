@@ -58,7 +58,7 @@ onMounted( () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border rounded-xl">
+  <div class="grid grid-cols-3 gap-x-6 max-w-6xl items-start mx-auto p-4 border bg-gray-800">
     <div>
       <h2 class="font-semibold">Users</h2>
       <p class="italic" v-if="state.loading">Loading users ...</p>
@@ -82,7 +82,6 @@ onMounted( () => {
             type="submit" :disabled="state.saving">
           Add
         </button>
-
       </form>
     </section>
 
